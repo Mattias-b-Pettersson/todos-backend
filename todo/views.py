@@ -1,6 +1,7 @@
 # from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, filters
 from core.permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Todo
 from .serializers import ProfileSerializer
 
@@ -12,9 +13,8 @@ class TodoList(generics.ListCreateAPIView):
 
     queryset = Todo.objects.all()
     serializer_class = ProfileSerializer
-    filter_backends = [
-        filters.SearchFilter,
-    ]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = ["owner", "assigned"]
     search_fields = {
         "title",
         "priority",
