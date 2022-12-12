@@ -22,11 +22,11 @@ class Todo(models.Model):
     priority = models.CharField(
         max_length=255, default="todo", choices=priotity_chioses
     )
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
-    assigned = models.ManyToManyField(User, related_name="assigned", default=owner)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     file = models.FileField(upload_to="images/", blank=True)
+    assigned = models.ManyToManyField(User, related_name="assigned")
 
     class Meta:
         ordering = ["-created_at"]
