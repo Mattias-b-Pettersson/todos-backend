@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions
 from core.permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 
@@ -11,6 +12,8 @@ class CommentList(generics.ListCreateAPIView):
 
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["todo"]
     queryset = Comment.objects.all()
 
     def perform_create(self, serializer):
