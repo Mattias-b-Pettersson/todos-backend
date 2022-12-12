@@ -1,5 +1,5 @@
 from django.urls import path
-from comments import views
+from comment import views
 
 urlpatterns = [
     path("comments/", views.CommentList.as_view(), name="get_comments"),
