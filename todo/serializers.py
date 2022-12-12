@@ -22,4 +22,5 @@ class ProfileSerializer(serializers.ModelSerializer):
             "priority",
             "is_owner",
             "file",
+            "assigned",
         ]
