@@ -21,4 +21,5 @@ urlpatterns = [
     path("", include("profiles.urls")),
     path("", include("todo.urls")),
     path("", include("comment.urls")),
+    path("auth/", include("rest_framework.urls")),
 ]
