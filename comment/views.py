@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from react_api.permissions import IsOwnerOrReadOnly
+from core.permissions import IsOwnerOrReadOnly
 from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 
