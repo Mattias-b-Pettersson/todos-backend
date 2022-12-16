@@ -1,5 +1,5 @@
 # from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters
+from rest_framework import generics, filters, permissions
 from core.permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Todo
@@ -11,6 +11,7 @@ class TodoList(generics.ListCreateAPIView):
     List all todos.
     """
 
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Todo.objects.all()
     serializer_class = ProfileSerializer
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
@@ -23,6 +24,10 @@ class TodoList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        print(request)
+        return self.create(request, *args, **kwargs)
 
 
 class TodoDetail(generics.RetrieveUpdateDestroyAPIView):
