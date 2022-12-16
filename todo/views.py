@@ -26,7 +26,7 @@ class TodoList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
     def post(self, request, *args, **kwargs):
-        print(request)
+        print(request.data)
         return self.create(request, *args, **kwargs)
 
 
