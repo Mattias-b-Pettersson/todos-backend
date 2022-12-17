@@ -3,7 +3,7 @@ from rest_framework import generics, filters, permissions
 from core.permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Todo
-from .serializers import ProfileSerializer
+from .serializers import TodoSerializer
 
 
 class TodoList(generics.ListCreateAPIView):
@@ -13,7 +13,7 @@ class TodoList(generics.ListCreateAPIView):
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Todo.objects.all()
-    serializer_class = ProfileSerializer
+    serializer_class = TodoSerializer
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     filterset_fields = ["owner", "assigned"]
     search_fields = {
@@ -37,4 +37,4 @@ class TodoDetail(generics.RetrieveUpdateDestroyAPIView):
 
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Todo.objects.all()
-    serializer_class = ProfileSerializer
+    serializer_class = TodoSerializer
