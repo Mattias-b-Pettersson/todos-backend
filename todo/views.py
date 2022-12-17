@@ -12,10 +12,15 @@ class TodoList(generics.ListCreateAPIView):
     """
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Todo.objects.all()
+    queryset = Todo.objects.filter()
     serializer_class = TodoSerializer
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
-    filterset_fields = ["owner", "assigned"]
+    filterset_fields = [
+        "owner",
+        "assigned",
+        "assigned__todo__status",
+        "assigned__todo__priority",
+    ]
     search_fields = {
         "title",
         "priority",
