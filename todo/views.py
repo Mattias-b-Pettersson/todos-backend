@@ -18,8 +18,8 @@ class TodoList(generics.ListCreateAPIView):
     filterset_fields = [
         "owner",
         "assigned",
-        "assigned__todo__status",
-        "assigned__todo__priority",
+        "status",
+        "priority",
     ]
     search_fields = {
         "title",
