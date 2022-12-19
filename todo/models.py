@@ -27,6 +27,7 @@ class Todo(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     file = models.FileField(upload_to="uploads/%Y/%m/%d/", blank=True, null=True)
     assigned = models.ManyToManyField(User, related_name="assigned")
+    due_date = models.DateTimeField(blank=True)
 
     class Meta:
         ordering = ["-created_at"]
