@@ -9,6 +9,10 @@ class TodoSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source="owner.id")
     profile_image = serializers.ReadOnlyField(source="owner.image")
     due_date_has_passed = serializers.SerializerMethodField()
+    assigned_username = serializers.SerializerMethodField()
+
+    def get_assigned_username(self, obj):
+        return obj.assigned.values_list("username", flat=True)
 
     def get_is_owner(self, obj):
         request = self.context["request"]
@@ -16,7 +20,7 @@ class TodoSerializer(serializers.ModelSerializer):
 
     def get_due_date_has_passed(self, obj):
         return obj.due_date < timezone.now()
-
+    
     class Meta:
         model = Todo
         fields = [
@@ -31,6 +35,7 @@ class TodoSerializer(serializers.ModelSerializer):
             "is_owner",
             "file",
             "assigned",
+            "assigned_username",
             "profile_id",
             "profile_image",
             "due_date",
