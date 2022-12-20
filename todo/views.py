@@ -14,7 +14,8 @@ class TodoList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Todo.objects.filter()
     serializer_class = TodoSerializer
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
+    filter_backends = [filters.SearchFilter,
+                       DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = [
         "owner",
         "assigned",

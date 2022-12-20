@@ -18,14 +18,16 @@ priotity_chioses = [
 class Todo(models.Model):
     title = models.CharField(max_length=255, blank=True)
     content = models.TextField(blank=True)
-    status = models.CharField(max_length=255, default="todo", choices=todo_choices)
+    status = models.CharField(
+        max_length=255, default="todo", choices=todo_choices)
     priority = models.CharField(
         max_length=255, default="todo", choices=priotity_chioses
     )
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    file = models.FileField(upload_to="uploads/%Y/%m/%d/", blank=True, null=True)
+    file = models.FileField(
+        upload_to="uploads/%Y/%m/%d/", blank=True, null=True)
     assigned = models.ManyToManyField(User, related_name="assigned")
     due_date = models.DateTimeField(blank=True)
 

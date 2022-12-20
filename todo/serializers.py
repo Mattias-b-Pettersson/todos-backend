@@ -33,7 +33,7 @@ class TodoSerializer(serializers.ModelSerializer):
 
     def get_due_date_has_passed(self, obj):
         return obj.due_date < timezone.now()
-    
+
     class Meta:
         model = Todo
         fields = [
