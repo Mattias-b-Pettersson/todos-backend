@@ -13,7 +13,7 @@ class TodoSerializer(serializers.ModelSerializer):
     assigned_username_id_img = serializers.SerializerMethodField()
     status_prettified = serializers.SerializerMethodField()
 
-    def status_prettified(self, obj):
+    def get_status_prettified(self, obj):
         if obj.status == "on_hold":
             return "On Hold"
         elif obj.status == "in_progress":
