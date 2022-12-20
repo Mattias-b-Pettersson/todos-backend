@@ -11,9 +11,9 @@ class TodoSerializer(serializers.ModelSerializer):
     profile_image = serializers.ReadOnlyField(source="owner.image")
     due_date_has_passed = serializers.SerializerMethodField()
     assigned_username_id_img = serializers.SerializerMethodField()
-    status = serializers.SerializerMethodField()
+    status_prettified = serializers.SerializerMethodField()
 
-    def get_status(self, obj):
+    def status_prettified(self, obj):
         if obj.status == "on_hold":
             return "On Hold"
         elif obj.status == "in_progress":
@@ -51,6 +51,7 @@ class TodoSerializer(serializers.ModelSerializer):
             "updated_at",
             "title",
             "status",
+            "status_prettified",
             "content",
             "priority",
             "is_owner_or_assigned",
