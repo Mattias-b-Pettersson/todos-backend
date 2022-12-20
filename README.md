@@ -1,108 +1,187 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-Welcome Mattias-b-Pettersson,
+# Todo rest Backend
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+Todo Backend is an rest API  backend for todo projects. It lets users create accounts, login, create todos, and edit or remove them. 
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+# Features
 
-## Gitpod Reminders
+## Todo
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+- A user can create a todo with the following information
+    - Title 
+    - Status
+    - Content
+    - Priority
+    - File
+    - Assigned
+    - Due date
 
-`python3 -m http.server`
+- When a api request is called for todos this is the information that returns:
+    - id
+    - owner
+    - created_at
+    - updated_at
+    - title
+    - status
+    - content
+    - priority
+    - is_owner_or_assigned (returns true or false)
+    - file
+    - assigned(returns id of the assigned)
+    - assigned_username
+    - profile_id
+    - due_date
+    - due_date_has_passed (returns true or false)
 
-A blue button should appear to click: _Make Public_,
+- The following urls can be used to acces todos "/todos" for all the todos or "/todo/id" where it returns a single todo, replace "id" with the appropiate id. 
 
-Another blue button should appear to click: _Open Browser_.
+- Todos can be filterd with the fields stated below, to filter in an api request simply add "?owner=1&status=in_progress" to the API todos url
+    -   owner
+    -   assigned
+    -   status
+    -   priority
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
 
-A blue button should appear to click: _Make Public_,
+- And it can also be sorted by every filed, ascending or descending.\
+To do this, add "?search=searchvariable" to the api or "&search=..." if you already has made some filters.
 
-Another blue button should appear to click: _Open Browser_.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
 
-To log into the Heroku toolbelt CLI:
+## Comments
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+- A user can comment on a todo, mostly to add work notes to them or to add comments to other people assigned to the todo.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+- A comment is saved with the following information
+    - todo assinged
+    - content
 
-------
+the information returnd if called from the API is the following.
+    - content
+    - todo (todo id number)
 
-## Release History
+- The following urls can be used to acces comments "/comments" for all the comments or "/comment/id" where it returns a single comment, replace "id" with the appropiate id. 
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+## Profiles
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+- A user can create a profile with the following information
+    - username
+    - password1
+    - password2
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+- When a api request is called for todos this is the information that returns:
+    - content
+    - created_at
+    - id
+    - image
+    - is_owner
+    - name
+    - owner (username from the user model, more on this connection below)
+    - updated_at
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+- The following urls can be used to acces profiles "/profiles" for all the profiles or "/profile/id" where it returns a single profile, replace "id" with the appropiate id. 
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+- User handling is made with dj-rest-auth on the /dj-rest-auth url. More about this can be read [here](https://dj-rest-auth.readthedocs.io/en/latest/).
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+# Testing
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+- Tested to send data that is required to the API and make sure it doesn't accept it.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+- Tried to send data to URLs that doesn't exist. Comes back with a 404 error, this is because no url to base is made 
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+- Tried to access the base URL only. This also returns a 404 error, this is because that no base url was made. I chose to do this because the only urls that it is gonna be used is already in place.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+- Tested to save data as a non owner for the todos, comments, and profiles.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+## Solved Bugs
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+When deploying the application to heroku there were multiple bugs that arose.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+- First the application didn't deploy, this was due to a compatability error with the backports.zoneinfo package.
+This was fixed by adding “backports.zoneinfo==0.2.1;python_version<"3.9" in the requirements.txt instead of “backports.zoneinfo==0.2.1"
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+## Remaining Bugs
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+- There are no known bugs remaining.
 
-------
+# Validator Testing
+I used automatic PEP8 refactoring. This was used by following a guide on [stack overflow](https://stackoverflow.com/questions/14328406/tool-to-convert-python-code-to-be-pep8-compliant)
 
-## FAQ about the uptime script
+No errors when passing through the PEP8 validator.
 
-**Why have you added this script?**
+There are some warnings left in the settings file, this is due to lines being to long but can't be broken up.
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
 
-**How will this affect me?**
+# Deployment
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+To deploy the project to heroku, do the following
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+1. Create a app in heroku.
+2. Under Resources in your app go click on "Find more add-ons".
+3. Add "Heroku Postgres" to the application.
+4. Click on the "Heroku Postgres" add-on in your project.
+5. Go in under settings and copy the URI and save it somewhere temporarily
+6. Login to Cloudinary or create a Cloudinary account.
+7. Go to the Cloudinary dashboard. Copy the API "Environment variable" and save it somewhere temporarily.
+8. In your Heroku app, go in to settings and click on "Reveal Config Vars"
+9. Click on "Add", in the key field write "CLOUDINARY_URL" and in the value field enter the "Environment variable" from cloudinary that was saved from before
+and delete the "CLOUDINARY_URL=" part. 
+10. Click on "Add", in the key field write "DATABASE_URL" and in the value field enter the URI from Postgres that was saved from before
+11. Click on "Add", in the key field write "SECRET_KEY" and in the value field enter a custom key. I used [this](https://djecrety.ir/) site to make mine.
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+Now all the settings is done on heroku. If your site is on Github, in the Heroku app go in to "Deploy" and connect your github account and project.
+Lastly scroll down and click on "Deploy Branch" and make sure "main" is selected.
 
-**So….?**
+To continue to develop the site you must set up de development environment. 
+To do this, create a new file named env.py in the projects root directory in the development environment. Make sure this file is not on github and in your gitignore file.
+In the env.py file import os, and write the code as stated below.
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+"import os
 
-**Can I opt out?**
+os.environ["DATABASE_URL"] = THE_POSTGRES_KEY FROM BEFORE
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+os.environ["SECRET_KEY"] = THE_SECRET_KEY
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+os.environ["CLOUDINARY_URL"] = THE_CLOUDINARY_KEY_WITHOUT_THE_CLOUDINARY_URL=_part."
 
-**Anything more?**
+# Model designs 
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+The Comment and Profile models i had alot of help from [Code institute](https://codeinstitute.net/) to make.
 
----
+These were the models i had in mind when creating the project.
 
-Happy coding!
+- Todo-model: 
+    - title
+    - content 
+    - status
+    - priority
+    - owner 
+    - created_at 
+    - updated_at
+    - file 
+    - assigned
+    - due_date
+
+- Comment:
+    - owner
+    - todo
+    - created_at
+    - updated_at
+    - content
+
+- Profile:
+    - owner
+    - created_at
+    - updated_at
+    - name
+    - content
+    - image
+
+# Database structure
+
+![flow chart](assets/readme-images/graphviz.png)
+
+# Credits
+
+- The solution to the deployment bug on Heroku is found [here](https://stackoverflow.com/questions/71712258/error-could-not-build-wheels-for-backports-zoneinfo-which-is-required-to-insta)
+- [Code institute](https://codeinstitute.net) with help on the project 
+
