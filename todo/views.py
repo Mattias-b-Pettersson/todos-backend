@@ -1,6 +1,6 @@
 # from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, filters, permissions
-from core.permissions import IsOwnerOrReadOnly
+from core.permissions import IsOwnerOrAssignedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Todo
 from .serializers import TodoSerializer
@@ -40,6 +40,6 @@ class TodoDetail(generics.RetrieveUpdateDestroyAPIView):
     Retrieve or update a profile if you're the owner.
     """
 
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrAssignedOrReadOnly]
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer

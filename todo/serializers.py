@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class TodoSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
-    is_owner = serializers.SerializerMethodField()
+    is_owner_or_assigned = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source="owner.id")
     profile_image = serializers.ReadOnlyField(source="owner.image")
     due_date_has_passed = serializers.SerializerMethodField()
@@ -27,9 +27,9 @@ class TodoSerializer(serializers.ModelSerializer):
     def get_assigned_username(self, obj):
         return obj.assigned.values_list("username", flat=True)
 
-    def get_is_owner(self, obj):
+    def get_is_owner_or_assigned(self, obj):
         request = self.context["request"]
-        return request.user == obj.owner
+        return obj.owner == request.user or obj.assigned.filter(id=request.user.id).exists()
 
     def get_due_date_has_passed(self, obj):
         return obj.due_date < timezone.now()
@@ -45,7 +45,7 @@ class TodoSerializer(serializers.ModelSerializer):
             "status",
             "content",
             "priority",
-            "is_owner",
+            "is_owner_or_assigned",
             "file",
             "assigned",
             "assigned_username",
