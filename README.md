@@ -182,5 +182,5 @@ These were the models i had in mind when creating the project.
 # Credits
 
 - The solution to the deployment bug on Heroku is found [here](https://stackoverflow.com/questions/71712258/error-could-not-build-wheels-for-backports-zoneinfo-which-is-required-to-insta)
-- [Code institute](https://codeinstitute.net) with help on the project 
+- [Code institute](https://codeinstitute.net) with help on the project specificaly the comment and profile apps.
 
