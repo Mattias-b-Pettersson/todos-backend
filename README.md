@@ -116,17 +116,16 @@ There are some warnings left in the settings file, this is due to lines being to
 To deploy the project to heroku, do the following
 
 1. Create a app in heroku.
-2. Under Resources in your app go click on "Find more add-ons".
-3. Add "Heroku Postgres" to the application.
-4. Click on the "Heroku Postgres" add-on in your project.
-5. Go in under settings and copy the URI and save it somewhere temporarily
-6. Login to Cloudinary or create a Cloudinary account.
-7. Go to the Cloudinary dashboard. Copy the API "Environment variable" and save it somewhere temporarily.
-8. In your Heroku app, go in to settings and click on "Reveal Config Vars"
-9. Click on "Add", in the key field write "CLOUDINARY_URL" and in the value field enter the "Environment variable" from cloudinary that was saved from before
+2. sign up at [Elephant SQL](https://www.elephantsql.com/)
+3. Create a new instance with tiny turtle as a plan and the appropiate region.
+4. Go in under details for the and copy the URL and save it somewhere temporarily
+5. Login to Cloudinary or create a Cloudinary account.
+6. Go to the Cloudinary dashboard. Copy the API "Environment variable" and save it somewhere temporarily.
+7. In your Heroku app, go in to settings and click on "Reveal Config Vars"
+8. Click on "Add", in the key field write "CLOUDINARY_URL" and in the value field enter the "Environment variable" from cloudinary that was saved from before
 and delete the "CLOUDINARY_URL=" part. 
-10. Click on "Add", in the key field write "DATABASE_URL" and in the value field enter the URI from Postgres that was saved from before
-11. Click on "Add", in the key field write "SECRET_KEY" and in the value field enter a custom key. I used [this](https://djecrety.ir/) site to make mine.
+9. Click on "Add", in the key field write "DATABASE_URL" and in the value field enter the URL from Elephant SQL that was saved from before
+10. Click on "Add", in the key field write "SECRET_KEY" and in the value field enter a custom key. I used [this](https://djecrety.ir/) site to make mine.
 
 Now all the settings is done on heroku. If your site is on Github, in the Heroku app go in to "Deploy" and connect your github account and project.
 Lastly scroll down and click on "Deploy Branch" and make sure "main" is selected.
