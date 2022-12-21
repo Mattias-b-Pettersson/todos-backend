@@ -8,7 +8,8 @@ from .serializers import TodoSerializer
 
 class TodoList(generics.ListCreateAPIView):
     """
-    List all todos.
+    List all todos, or create a new todo.  
+    Search by title, priority, status and also filter by owner, assigned, status, priority.
     """
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -38,7 +39,7 @@ class TodoList(generics.ListCreateAPIView):
 
 class TodoDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Retrieve or update a profile if you're the owner.
+    Retrieve, update or delete a todo instance if the user is the owner or is assigned to the todo.
     """
 
     permission_classes = [IsOwnerOrAssignedOrReadOnly]

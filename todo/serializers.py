@@ -5,6 +5,10 @@ from django.utils import timezone
 
 
 class TodoSerializer(serializers.ModelSerializer):
+    """
+    serializer for the Todo model. 
+    Adds extra fields when returning a list of Todo instances.
+    """
     owner = serializers.ReadOnlyField(source="owner.username")
     is_owner_or_assigned = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source="owner.id")
@@ -14,6 +18,9 @@ class TodoSerializer(serializers.ModelSerializer):
     status_prettified = serializers.SerializerMethodField()
 
     def get_status_prettified(self, obj):
+        """
+        Returns a prettified version of the status so that it is easily displayed on the front end.
+        """
         if obj.status == "on_hold":
             return "On Hold"
         elif obj.status == "in_progress":
@@ -26,6 +33,9 @@ class TodoSerializer(serializers.ModelSerializer):
             return obj.status
 
     def get_assigned_username_id_img(self, obj):
+        """
+        Returns a list of tuples of assigned users' username, id and image.
+        """
         username = obj.assigned.values_list("username", flat=True)
         id = obj.assigned.values_list("id", flat=True)
         img = []
@@ -36,6 +46,9 @@ class TodoSerializer(serializers.ModelSerializer):
         return zip(username, img, id)
 
     def get_is_owner_or_assigned(self, obj):
+        """
+        Checks if the user is the owner or is assigned to the todo.
+        """
         request = self.context["request"]
         return obj.owner == request.user or obj.assigned.filter(id=request.user.id).exists()
 

@@ -17,13 +17,22 @@ class CommentSerializer(serializers.ModelSerializer):
     updated_at = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
+        """
+        Checks if the user is the owner of the comment.
+        """
         request = self.context["request"]
         return request.user == obj.owner
 
     def get_updated_at(self, obj):
+        """
+        Returns a natural time representation of the updated_at field.
+        """
         return naturaltime(obj.updated_at)
 
     def get_created_at(self, obj):
+        """
+        Returns a natural time representation of the created_at field.
+        """
         return naturaltime(obj.created_at)
 
     class Meta:
